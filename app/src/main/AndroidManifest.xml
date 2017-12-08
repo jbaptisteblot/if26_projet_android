@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fr.utt.if26.if26_sncfprojet">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,5 +26,4 @@
         </activity>
         <activity android:name=".SearchPlace"></activity>
     </application>
-
 </manifest>
