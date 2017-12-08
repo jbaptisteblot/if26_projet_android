@@ -26,7 +26,7 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/configuration_apikey_input"
+        android:hint="@string/configuration_apikey_input"
         app:layout_constraintStart_toStartOf="@+id/configuration_apikey_title"
         app:layout_constraintTop_toBottomOf="@+id/configuration_apikey_title" />
 

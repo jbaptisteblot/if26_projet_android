@@ -13,8 +13,8 @@ public class MainActivityTemp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_temp);
         Button tempConfigurationButton = findViewById(R.id.temp_configuration_button);
-        tempConfigurationButton.setOnClickListener(onClickListener);
         Button tempSearchPlaceButton = findViewById(R.id.temp_searchPlace_button);
+        tempConfigurationButton.setOnClickListener(onClickListener);
         tempSearchPlaceButton.setOnClickListener(onClickListener);
 
     }

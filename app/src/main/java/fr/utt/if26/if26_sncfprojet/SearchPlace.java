@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -29,14 +29,14 @@ public class SearchPlace extends AppCompatActivity {
         setContentView(R.layout.activity_search_place);
 
         context = getApplicationContext();
-        Button searchPlaceButton = findViewById(R.id.searchplace_button);
+        ImageButton searchPlaceButton = findViewById(R.id.searchplace_button);
         searchPlaceInput = findViewById(R.id.searchplace_input);
         searchPlaceListView = findViewById(R.id.searchplace_listView);
         searchPlaceButton.setOnClickListener(onClickListener);
         apikey = APIKeyClass.getKey(context);
 
         gares = new ArrayList<>();
-        gares.add("GareClasse{name='Troyes', id='stop_area:OCE:SA:87118000'}");
+        //TODO : Implémenter un ArrayAdapter qui soit compatible avec une ArrayList de type GareClasse. Et changer de String à Gare Classe pour les autres ensuite
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, gares);
         searchPlaceListView.setAdapter(arrayAdapter);
 

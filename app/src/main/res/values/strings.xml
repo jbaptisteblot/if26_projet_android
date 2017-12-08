@@ -7,4 +7,5 @@
     <string name="apikey">apikey</string>
     <string name="apikey_save_successfull">Votre clé a été sauvegardée.</string>
     <string name="title_activity_search_place">SearchPlace</string>
+    <string name="searchplace_text_default_input">Gare</string>
 </resources>
