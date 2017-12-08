@@ -4,18 +4,25 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class SearchPlace extends AppCompatActivity {
     String apikey;
     EditText searchPlaceInput;
+    ListView searchPlaceListView;
     Context context;
+    ArrayList<String> gares;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,8 +31,15 @@ public class SearchPlace extends AppCompatActivity {
         context = getApplicationContext();
         Button searchPlaceButton = findViewById(R.id.searchplace_button);
         searchPlaceInput = findViewById(R.id.searchplace_input);
+        searchPlaceListView = findViewById(R.id.searchplace_listView);
         searchPlaceButton.setOnClickListener(onClickListener);
         apikey = APIKeyClass.getKey(context);
+
+        gares = new ArrayList<>();
+        gares.add("GareClasse{name='Troyes', id='stop_area:OCE:SA:87118000'}");
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, gares);
+        searchPlaceListView.setAdapter(arrayAdapter);
+
 
 
     }
@@ -33,7 +47,11 @@ public class SearchPlace extends AppCompatActivity {
         return new IResult() {
             @Override
             public void notifySuccess(JSONObject response) {
-                Toast.makeText(context, response.toString(), Toast.LENGTH_LONG).show();
+                gares.clear();
+                gares.addAll(ParseJSON.getGares(response));
+                System.out.println(gares);
+                ((BaseAdapter) searchPlaceListView.getAdapter()).notifyDataSetChanged();
+                //Toast.makeText(context, response.toString(), Toast.LENGTH_LONG).show();
             }
             @Override
             public void notifyError(VolleyError error) {
@@ -45,10 +63,11 @@ public class SearchPlace extends AppCompatActivity {
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            String url = "https://api.sncf.com/v1/coverage/sncf/places?q=" + searchPlaceInput.getText().toString();
+            String url = "https://api.sncf.com/v1/coverage/sncf/places?type[]=stop_area&q=" + searchPlaceInput.getText().toString();
             IResult callback = volleyCallback();
             VolleyService volleyService = new VolleyService(callback, context);
             volleyService.getData(url, apikey);
+
         }
     };
 }
