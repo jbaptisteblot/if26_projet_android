@@ -7,11 +7,11 @@
     tools:context="fr.utt.if26.if26_sncfprojet.Configuration">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/configuration_apikey_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/configuration_apikey_title"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textAppearance="@android:style/TextAppearance.Material.Headline"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.063"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -20,24 +20,24 @@
         app:layout_constraintVertical_bias="0.239" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/configuration_apikey_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="@string/configuration_apikey_input"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintStart_toStartOf="@+id/configuration_apikey_title"
+        app:layout_constraintTop_toBottomOf="@+id/configuration_apikey_title" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/configuration_save_button"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Sauvegarder"
+        android:text="@string/save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
