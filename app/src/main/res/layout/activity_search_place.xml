@@ -7,7 +7,7 @@
     tools:context="fr.utt.if26.if26_sncfprojet.SearchPlace">
 
     <EditText
-        android:id="@+id/seachplace_input"
+        android:id="@+id/searchplace_input"
         android:layout_width="273dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -17,7 +17,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
-        app:layout_constraintBottom_toTopOf="@+id/listView"
+        app:layout_constraintBottom_toTopOf="@+id/searchplace_listView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +25,7 @@
         app:layout_constraintVertical_bias="0.16" />
 
     <ListView
-        android:id="@+id/listView"
+        android:id="@+id/searchplace_listView"
         android:layout_width="344dp"
         android:layout_height="422dp"
         android:layout_marginBottom="8dp"
@@ -36,11 +36,11 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/seachplace_button"
+        android:id="@+id/searchplace_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="Search"
-        app:layout_constraintStart_toEndOf="@+id/seachplace_input"
-        app:layout_constraintTop_toTopOf="@+id/seachplace_input" />
+        app:layout_constraintStart_toEndOf="@+id/searchplace_input"
+        app:layout_constraintTop_toTopOf="@+id/searchplace_input" />
 </android.support.constraint.ConstraintLayout>
