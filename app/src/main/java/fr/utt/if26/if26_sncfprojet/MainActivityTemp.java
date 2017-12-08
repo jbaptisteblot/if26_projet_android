@@ -14,15 +14,22 @@ public class MainActivityTemp extends AppCompatActivity {
         setContentView(R.layout.activity_main_temp);
         Button tempConfigurationButton = findViewById(R.id.temp_configuration_button);
         tempConfigurationButton.setOnClickListener(onClickListener);
+        Button tempSearchPlaceButton = findViewById(R.id.temp_searchPlace_button);
+        tempSearchPlaceButton.setOnClickListener(onClickListener);
 
     }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            Intent intent;
             switch (v.getId()) {
                 case R.id.temp_configuration_button:
-                    Intent intent = new Intent(MainActivityTemp.this, Configuration.class);
+                    intent = new Intent(MainActivityTemp.this, Configuration.class);
+                    startActivity(intent);
+                    break;
+                case R.id.temp_searchPlace_button:
+                    intent = new Intent(MainActivityTemp.this, SearchPlace.class);
                     startActivity(intent);
                     break;
             }

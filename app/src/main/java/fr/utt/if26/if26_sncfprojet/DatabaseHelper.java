@@ -9,8 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Classe permettant d'accéder à la base de données.
  */
 
-public class Database extends SQLiteOpenHelper{
-    public Database(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+public class DatabaseHelper extends SQLiteOpenHelper{
+    public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
