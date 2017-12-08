@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">IF26_SNCFProjet</string>
+    <string name="configuration_apikey_title">Clé API SNCF</string>
+    <string name="configuration_apikey_input">Rentrez votre Clé</string>
+</resources>
