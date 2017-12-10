@@ -12,14 +12,14 @@ import java.util.ArrayList;
  */
 
 class ParseJSON {
-    static ArrayList<String> getGares(JSONObject json) {
-        ArrayList<String> gareClasseArrayList = new ArrayList<>();
+    static ArrayList<GareClasse> getGares(JSONObject json) {
+        ArrayList<GareClasse> gareClasseArrayList = new ArrayList<>();
         try {
             JSONArray jsonArray = json.getJSONArray("places");
             for(int i=0; i < jsonArray.length(); i++) {
                 try {
                     JSONObject oneObject = jsonArray.getJSONObject(i);
-                    gareClasseArrayList.add(new GareClasse(oneObject.getJSONObject("stop_area").getString("name"), oneObject.getJSONObject("stop_area").getString("id")).toString());
+                    gareClasseArrayList.add(new GareClasse(oneObject.getJSONObject("stop_area").getString("name"), oneObject.getJSONObject("stop_area").getString("id")));
                 } catch (JSONException e) {
                     System.out.println(e.toString());
                 }

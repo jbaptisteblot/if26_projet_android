@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -22,7 +22,7 @@ public class SearchPlace extends AppCompatActivity {
     EditText searchPlaceInput;
     ListView searchPlaceListView;
     Context context;
-    ArrayList<String> gares;
+    ArrayList<GareClasse> gares = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,10 +35,17 @@ public class SearchPlace extends AppCompatActivity {
         searchPlaceButton.setOnClickListener(onClickListener);
         apikey = APIKeyClass.getKey(context);
 
-        gares = new ArrayList<>();
-        //TODO : Implémenter un ArrayAdapter qui soit compatible avec une ArrayList de type GareClasse. Et changer de String à Gare Classe pour les autres ensuite
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, gares);
-        searchPlaceListView.setAdapter(arrayAdapter);
+        final GareArrayAdapter gareArrayAdapter = new GareArrayAdapter(context, gares);
+
+        searchPlaceListView.setAdapter(gareArrayAdapter);
+
+        searchPlaceListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                GareClasse gare = (GareClasse) adapterView.getItemAtPosition(i);
+                System.out.println(gare.toString());
+            }
+        });
 
 
 
