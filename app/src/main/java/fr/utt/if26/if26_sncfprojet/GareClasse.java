@@ -1,11 +1,14 @@
 package fr.utt.if26.if26_sncfprojet;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Classe permettant de gérer les gares.
  * Created by Jeanba on 08/12/2017.
  */
 
-public class GareClasse {
+public class GareClasse implements Parcelable {
     private String name;
     private String id;
 
@@ -32,6 +35,11 @@ public class GareClasse {
         System.out.println("new Gare : " + name + ", id :" + id);
     }
 
+    private GareClasse(Parcel in) {
+        name = in.readString();
+        id = in.readString();
+    }
+
     @Override
     public String toString() {
         return "GareClasse{" +
@@ -39,4 +47,28 @@ public class GareClasse {
                 ", id='" + id + '\'' +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(this.name);
+        parcel.writeString(this.id);
+    }
+
+    public static final Creator<GareClasse> CREATOR = new Creator<GareClasse>() {
+        @Override
+        public GareClasse createFromParcel(Parcel in) {
+            return new GareClasse(in);
+        }
+
+        @Override
+        public GareClasse[] newArray(int size) {
+            return new GareClasse[size];
+        }
+    };
+
 }

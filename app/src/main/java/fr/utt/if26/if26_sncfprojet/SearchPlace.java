@@ -24,13 +24,19 @@ public class SearchPlace extends AppCompatActivity {
     ListView searchPlaceListView;
     Context context;
     ArrayList<GareClasse> gares = new ArrayList<>();
+    TrajetClasse trajet = new TrajetClasse(null, null);
+    String type;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_place);
 
         Intent mainIntent = getIntent();
-        String type = mainIntent.getStringExtra("type");
+        type = (mainIntent.hasExtra("type"))? mainIntent.getStringExtra("type"): "";
+        if (mainIntent.hasExtra("trajet")) {
+            trajet = mainIntent.getParcelableExtra("trajet");
+        }
 
 
         context = getApplicationContext();
@@ -39,7 +45,7 @@ public class SearchPlace extends AppCompatActivity {
         searchPlaceInput = findViewById(R.id.searchplace_input);
         searchPlaceListView = findViewById(R.id.searchplace_listView);
         searchPlaceButton.setOnClickListener(onClickListener);
-        apikey = APIKeyClass.getKey(context);
+        apikey = APIKeyClasse.getKey(context);
 
         switch (type) {
             case "depart":
@@ -54,13 +60,7 @@ public class SearchPlace extends AppCompatActivity {
 
         searchPlaceListView.setAdapter(gareArrayAdapter);
 
-        searchPlaceListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                GareClasse gare = (GareClasse) adapterView.getItemAtPosition(i);
-                System.out.println(gare.toString());
-            }
-        });
+        searchPlaceListView.setOnItemClickListener(onItemClickListener);
 
 
 
@@ -85,11 +85,35 @@ public class SearchPlace extends AppCompatActivity {
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            Toast.makeText(context, "Recherche...", Toast.LENGTH_SHORT).show();
             String url = "https://api.sncf.com/v1/coverage/sncf/places?type[]=stop_area&q=" + searchPlaceInput.getText().toString();
             IResult callback = volleyCallback();
             VolleyService volleyService = new VolleyService(callback, context);
             volleyService.getData(url, apikey);
 
+        }
+    };
+
+    private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            GareClasse gare = (GareClasse) adapterView.getItemAtPosition(i);
+            Intent intent;
+            switch (type) {
+                case "depart":
+                    trajet.setGareDepart(gare);
+                    intent = new Intent(context, addDestination.class);
+                    intent.putExtra("trajet", trajet);
+                    startActivity(intent);
+                    break;
+                case "arrive":
+                    trajet.setGareArrive(gare);
+                    intent = new Intent(context, addDestination.class);
+                    intent.putExtra("trajet", trajet);
+                    startActivity(intent);
+                    break;
+            }
+            System.out.println(gare.toString());
         }
     };
 }

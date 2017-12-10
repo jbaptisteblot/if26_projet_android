@@ -8,7 +8,7 @@ import android.content.SharedPreferences;
  * Created by Jeanba on 08/12/2017.
  */
 
-class APIKeyClass {
+class APIKeyClasse {
     static String getKey(Context context) {
         SharedPreferences pref = context.getSharedPreferences(
                 context.getResources().getString(R.string.apikey),

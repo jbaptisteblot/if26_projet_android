@@ -19,15 +19,15 @@ public class Configuration extends AppCompatActivity {
         final Button saveButton = findViewById(R.id.configuration_save_button);
         final Context context = getApplicationContext();
 
-        String apikey = APIKeyClass.getKey(context);
+        String apikey = APIKeyClasse.getKey(context);
         if (apikey != null) {
-            configurationAPIKEYInput.setText(APIKeyClass.getKey(this));
+            configurationAPIKEYInput.setText(APIKeyClasse.getKey(this));
         }
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                APIKeyClass.setKey(context, configurationAPIKEYInput.getText().toString());
+                APIKeyClasse.setKey(context, configurationAPIKEYInput.getText().toString());
                 Toast.makeText(context, R.string.apikey_save_successfull, Toast.LENGTH_LONG).show();
             }
         });
