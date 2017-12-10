@@ -1,5 +1,6 @@
 package fr.utt.if26.if26_sncfprojet;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -104,13 +105,15 @@ public class SearchPlace extends AppCompatActivity {
                     trajet.setGareDepart(gare);
                     intent = new Intent(context, addDestination.class);
                     intent.putExtra("trajet", trajet);
-                    startActivity(intent);
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
                     break;
                 case "arrive":
                     trajet.setGareArrive(gare);
                     intent = new Intent(context, addDestination.class);
                     intent.putExtra("trajet", trajet);
-                    startActivity(intent);
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
                     break;
             }
             System.out.println(gare.toString());

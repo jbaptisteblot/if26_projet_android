@@ -1,5 +1,6 @@
 package fr.utt.if26.if26_sncfprojet;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -12,26 +13,19 @@ import android.widget.Toast;
 public class addDestination extends AppCompatActivity {
     TrajetClasse trajet = new TrajetClasse(null, null);
     Context context;
+    EditText editText_Depart;
+    EditText editText_Arrive;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_destination);
         context = getApplicationContext();
-        Intent intent = getIntent();
-        if (intent.hasExtra("trajet")) {
-            trajet = intent.getParcelableExtra("trajet");
-        }
 
-        EditText editText_Depart = findViewById(R.id.addDestination_textInput_depart);
-        EditText editText_Arrive = findViewById(R.id.addDestination_textInput_Arrive);
+        editText_Depart = findViewById(R.id.addDestination_textInput_depart);
+        editText_Arrive = findViewById(R.id.addDestination_textInput_Arrive);
         Button button_save = findViewById(R.id.addDestination_saveButton);
 
-        if (trajet.getGareDepart() != null) {
-            editText_Depart.setText(trajet.getGareDepart().getName());
-        }
-        if (trajet.getGareArrive() != null) {
-            editText_Arrive.setText(trajet.getGareArrive().getName());
-        }
+
         editText_Depart.setOnClickListener(onClickListener);
         editText_Arrive.setOnClickListener(onClickListener);
         button_save.setOnClickListener(onClickListener);
@@ -47,13 +41,13 @@ public class addDestination extends AppCompatActivity {
                     intent.putExtra("type", "depart");
                     intent.putExtra("trajet", trajet);
 
-                    startActivity(intent);
+                    startActivityForResult(intent, 1);
                     break;
                 case R.id.addDestination_textInput_Arrive :
                     intent = new Intent(context, SearchPlace.class);
                     intent.putExtra("type", "arrive");
                     intent.putExtra("trajet", trajet);
-                    startActivity(intent);
+                    startActivityForResult(intent, 1);
                     break;
                 case R.id.addDestination_saveButton :
                     Toast.makeText(context, "Vous avez essayé d'enregistrer le trajet.", Toast.LENGTH_SHORT).show();
@@ -61,6 +55,26 @@ public class addDestination extends AppCompatActivity {
             }
         }
     };
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                trajet = data.getParcelableExtra("trajet");
+
+                if (trajet.getGareDepart() != null) {
+                    editText_Depart.setText(trajet.getGareDepart().getName());
+                }
+                if (trajet.getGareArrive() != null) {
+                    editText_Arrive.setText(trajet.getGareArrive().getName());
+                }
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+                System.out.println("Aucun retour");
+            }
+        }
+    }//onActivityResult
 
 
 }
