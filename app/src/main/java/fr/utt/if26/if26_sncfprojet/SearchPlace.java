@@ -1,6 +1,7 @@
 package fr.utt.if26.if26_sncfprojet;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -28,12 +29,26 @@ public class SearchPlace extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_place);
 
+        Intent mainIntent = getIntent();
+        String type = mainIntent.getStringExtra("type");
+
+
         context = getApplicationContext();
+
         ImageButton searchPlaceButton = findViewById(R.id.searchplace_button);
         searchPlaceInput = findViewById(R.id.searchplace_input);
         searchPlaceListView = findViewById(R.id.searchplace_listView);
         searchPlaceButton.setOnClickListener(onClickListener);
         apikey = APIKeyClass.getKey(context);
+
+        switch (type) {
+            case "depart":
+                searchPlaceInput.setHint(R.string.addDestination_textDepart_default_input);
+                break;
+            case "arrive":
+                searchPlaceInput.setHint(R.string.addDestination_textDestination_default_input);
+                break;
+        }
 
         final GareArrayAdapter gareArrayAdapter = new GareArrayAdapter(context, gares);
 
