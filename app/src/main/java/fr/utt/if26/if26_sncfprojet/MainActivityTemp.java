@@ -14,8 +14,11 @@ public class MainActivityTemp extends AppCompatActivity {
         setContentView(R.layout.activity_main_temp);
         Button tempConfigurationButton = findViewById(R.id.temp_configuration_button);
         Button tempSearchPlaceButton = findViewById(R.id.temp_searchPlace_button);
+        Button tempaddDestinationButton = findViewById(R.id.temp_addDestination_Button);
+
         tempConfigurationButton.setOnClickListener(onClickListener);
         tempSearchPlaceButton.setOnClickListener(onClickListener);
+        tempaddDestinationButton.setOnClickListener(onClickListener);
 
     }
 
@@ -30,6 +33,10 @@ public class MainActivityTemp extends AppCompatActivity {
                     break;
                 case R.id.temp_searchPlace_button:
                     intent = new Intent(MainActivityTemp.this, SearchPlace.class);
+                    startActivity(intent);
+                    break;
+                case R.id.temp_addDestination_Button:
+                    intent = new Intent(MainActivityTemp.this, addDestination.class);
                     startActivity(intent);
                     break;
             }

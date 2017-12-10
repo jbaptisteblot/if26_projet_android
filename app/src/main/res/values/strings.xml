@@ -8,4 +8,8 @@
     <string name="apikey_save_successfull">Votre clé a été sauvegardée.</string>
     <string name="title_activity_search_place">SearchPlace</string>
     <string name="searchplace_text_default_input">Gare</string>
+    <string name="addDestination_textDepart_default_input">Départ</string>
+    <string name="addDestination_textDestination_default_input">Destination</string>
+    <string name="addDestination_title">Ajouter un trajet</string>
+    <string name="addDestination_saveButton">Enregistrer le trajet</string>
 </resources>
