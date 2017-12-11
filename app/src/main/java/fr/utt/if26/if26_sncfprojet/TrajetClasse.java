@@ -2,6 +2,7 @@ package fr.utt.if26.if26_sncfprojet;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 
 /**
@@ -12,7 +13,9 @@ import android.support.annotation.Nullable;
 public class TrajetClasse implements Parcelable {
     private GareClasse gareDepart;
     private GareClasse gareArrive;
+    private Long id_trajet = null;
 
+    // Constructor
     TrajetClasse(@Nullable GareClasse gareDepart, @Nullable GareClasse gareArrive) {
         if (gareDepart != null) {
             this.gareDepart = gareDepart;
@@ -23,8 +26,27 @@ public class TrajetClasse implements Parcelable {
     }
 
     private TrajetClasse(Parcel in) {
+        id_trajet = in.readLong();
         gareDepart = in.readParcelable(GareClasse.class.getClassLoader());
         gareArrive = in.readParcelable(GareClasse.class.getClassLoader());
+    }
+    TrajetClasse(long id_trajet, DatabaseHelper db) {
+        this.id_trajet = id_trajet;
+        if(!SyncToDB(db)) throw new IllegalArgumentException("n'appartient pas à la BDD");
+    }
+
+    TrajetClasse(long id_trajet, GareClasse gareDepart, GareClasse gareArrive) {
+        this.gareDepart = gareDepart;
+        this.gareArrive = gareArrive;
+        this.id_trajet = id_trajet;
+    }
+
+    public Long getId_trajet() {
+        return id_trajet;
+    }
+
+    public void setId_trajet(Long id_trajet) {
+        this.id_trajet = id_trajet;
     }
 
     GareClasse getGareDepart() {
@@ -38,11 +60,41 @@ public class TrajetClasse implements Parcelable {
     GareClasse getGareArrive() {
         return gareArrive;
     }
+    // toString
+    @Override
+    public String toString() {
+        return "TrajetClasse{" +
+                "gareDepart=" + gareDepart +
+                ", gareArrive=" + gareArrive +
+                '}';
+    }
 
     void setGareArrive(GareClasse gareArrive) {
         this.gareArrive = gareArrive;
     }
-
+    // SQLite
+    private boolean canSearchOnDB() {
+        return (this.getId_trajet() != null || (this.getGareDepart() != null && this.getGareArrive() != null));
+    }
+    boolean SyncToDB(DatabaseHelper db) {
+        if (!canSearchOnDB()) {
+            return false;
+        }
+        else {
+            TrajetClasse trajetSQL = db.findOrCreateTrajet(this);
+            if (this.id_trajet == null) {
+                this.id_trajet = trajetSQL.getId_trajet();
+            }
+            if (this.gareDepart == null) {
+                this.gareDepart = trajetSQL.getGareDepart();
+            }
+            if (this.gareArrive == null) {
+                this.gareArrive = trajetSQL.getGareArrive();
+            }
+            return true;
+        }
+    }
+    //Parcelable
     @Override
     public int describeContents() {
         return 0;
@@ -50,6 +102,7 @@ public class TrajetClasse implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(id_trajet);
         parcel.writeParcelable(gareDepart, i);
         parcel.writeParcelable(gareArrive, i);
 
