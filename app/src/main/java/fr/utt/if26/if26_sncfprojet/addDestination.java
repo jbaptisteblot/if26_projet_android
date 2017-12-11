@@ -51,6 +51,8 @@ public class addDestination extends AppCompatActivity {
                     break;
                 case R.id.addDestination_saveButton :
                     Toast.makeText(context, "Vous avez essayé d'enregistrer le trajet.", Toast.LENGTH_SHORT).show();
+                    DatabaseHelper db = new DatabaseHelper(context);
+                    trajet.SyncToDB(db);
                     break;
             }
         }

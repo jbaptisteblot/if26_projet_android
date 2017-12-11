@@ -13,7 +13,7 @@ import android.support.annotation.Nullable;
 public class TrajetClasse implements Parcelable {
     private GareClasse gareDepart;
     private GareClasse gareArrive;
-    private Long id_trajet = null;
+    private Long id_trajet = (long) -1;
 
     // Constructor
     TrajetClasse(@Nullable GareClasse gareDepart, @Nullable GareClasse gareArrive) {
@@ -64,7 +64,8 @@ public class TrajetClasse implements Parcelable {
     @Override
     public String toString() {
         return "TrajetClasse{" +
-                "gareDepart=" + gareDepart +
+                "idTrajet=" + id_trajet +
+                ", gareDepart=" + gareDepart +
                 ", gareArrive=" + gareArrive +
                 '}';
     }
@@ -74,7 +75,7 @@ public class TrajetClasse implements Parcelable {
     }
     // SQLite
     private boolean canSearchOnDB() {
-        return (this.getId_trajet() != null || (this.getGareDepart() != null && this.getGareArrive() != null));
+        return (this.getId_trajet() != (long)-1 || (this.getGareDepart() != null && this.getGareArrive() != null));
     }
     boolean SyncToDB(DatabaseHelper db) {
         if (!canSearchOnDB()) {
@@ -82,7 +83,7 @@ public class TrajetClasse implements Parcelable {
         }
         else {
             TrajetClasse trajetSQL = db.findOrCreateTrajet(this);
-            if (this.id_trajet == null) {
+            if (this.id_trajet == (long) -1) {
                 this.id_trajet = trajetSQL.getId_trajet();
             }
             if (this.gareDepart == null) {

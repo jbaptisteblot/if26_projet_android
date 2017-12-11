@@ -38,7 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     private static final String KEY_NOM_GARE = "gare_nom";
 
     private static final String CREATE_TABLE_GARE = "CREATE TABLE " + TABLE_GARE + "(" + KEY_ID_GARE + " TEXT PRIMARY KEY, " + KEY_NOM_GARE + " TEXT)";
-    private static final String CREATE_TABLE_TRAJET = "CREATE TABLE " + TABLE_TRAJET + "(" + KEY_ID_TRAJET + " INTEGER PRIMARY KEY, " + KEY_GARE_DEPART + " TEXT, " + KEY_GARE_ARRIVE + " TEXT, FOREIGN KEY (" + KEY_GARE_DEPART + ") REFERENCES " + TABLE_GARE + "(" + KEY_ID_GARE + "), FOREIGN KEY (" + KEY_GARE_ARRIVE + ") REFERENCES " + TABLE_GARE + "(" + KEY_ID_GARE + ")";
+    private static final String CREATE_TABLE_TRAJET = "CREATE TABLE " + TABLE_TRAJET + "(" + KEY_ID_TRAJET + " INTEGER PRIMARY KEY, " + KEY_GARE_DEPART + " TEXT, " + KEY_GARE_ARRIVE + " TEXT, FOREIGN KEY (" + KEY_GARE_DEPART + ") REFERENCES " + TABLE_GARE + "(" + KEY_ID_GARE + "), FOREIGN KEY (" + KEY_GARE_ARRIVE + ") REFERENCES " + TABLE_GARE + "(" + KEY_ID_GARE + "))";
 
 
     public DatabaseHelper(Context context) {
@@ -83,19 +83,20 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 
         Cursor c = db.rawQuery(selectQuery, arguments);
-        if (c != null) {
-            c.moveToFirst();
-        }
-        try {
-            assert c != null;
-            String id_gare = c.getString(c.getColumnIndex(KEY_ID_GARE));
-            String nom_gare = c.getString(c.getColumnIndex(KEY_NOM_GARE));
+        if (c != null && c.moveToFirst()) {
+            try {
+                String id_gare = c.getString(c.getColumnIndex(KEY_ID_GARE));
+                String nom_gare = c.getString(c.getColumnIndex(KEY_NOM_GARE));
 
-            return new GareClasse(id_gare, nom_gare);
-        } catch (NullPointerException e) {
-            System.out.println(e.toString());
+                return new GareClasse(nom_gare, id_gare);
+            } catch (NullPointerException e) {
+                System.out.println(e.toString());
+            }
+            c.close();
         }
-        c.close();
+        else {
+            return null;
+        }
         return null;
     }
 
@@ -112,7 +113,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 String id_gare = c.getString(c.getColumnIndex(KEY_ID_GARE));
                 String nom_gare = c.getString(c.getColumnIndex(KEY_NOM_GARE));
 
-                 gares.add(new GareClasse(id_gare, nom_gare));
+                 gares.add(new GareClasse(nom_gare, id_gare));
             } while(c.moveToNext());
         }
         c.close();
@@ -144,46 +145,49 @@ public class DatabaseHelper extends SQLiteOpenHelper{
        SQLiteDatabase db = this.getReadableDatabase();
        String selectQuery = "SELECT * FROM " + TABLE_TRAJET + " WHERE " + KEY_ID_TRAJET + "= ?";
        Cursor c = db.rawQuery(selectQuery, new String[]{Objects.toString(id_trajet, null)});
-       if (c != null) {
-           c.moveToFirst();
+       if (c != null && c.moveToFirst()) {
+           try {
+               GareClasse gare_depart = findGare(c.getString(c.getColumnIndex(KEY_GARE_DEPART)));
+               GareClasse gare_arrive = findGare(c.getString(c.getColumnIndex(KEY_GARE_ARRIVE)));
+               return new TrajetClasse(id_trajet, gare_depart, gare_arrive);
+           } catch (NullPointerException e) {
+               System.out.println(e.toString());
+           }
+           c.close();
        }
-       try {
-           assert c != null;
-           GareClasse gare_depart = findGare(c.getString(c.getColumnIndex(KEY_GARE_DEPART)));
-           GareClasse gare_arrive = findGare(c.getString(c.getColumnIndex(KEY_GARE_ARRIVE)));
-            return new TrajetClasse(id_trajet, gare_depart, gare_arrive);
-       } catch (NullPointerException e) {
-           System.out.println(e.toString());
+       else {
+           return null;
        }
-        c.close();
        return null;
     }
     private TrajetClasse findTrajet(GareClasse gare_depart, GareClasse gare_arrive) {
        SQLiteDatabase db = this.getReadableDatabase();
        String selectQuery = "SELECT * FROM " + TABLE_TRAJET + " WHERE " + KEY_GARE_DEPART + "= ? AND " + KEY_GARE_ARRIVE + "= ?";
        Cursor c = db.rawQuery(selectQuery, new String[]{gare_depart.getId(), gare_arrive.getId()});
-       if (c != null) {
-           c.moveToFirst();
+       if (c != null && c.moveToFirst()) {
+
+           try {
+               long id_trajet = c.getLong(c.getColumnIndex(KEY_ID_TRAJET));
+               return new TrajetClasse(id_trajet, gare_depart, gare_arrive);
+           } catch (NullPointerException e) {
+               System.out.println(e.toString());
+           }
+           c.close();
        }
-       try {
-           assert c != null;
-           long id_trajet = c.getLong(c.getColumnIndex(KEY_ID_TRAJET));
-            return new TrajetClasse(id_trajet, gare_depart, gare_arrive);
-       } catch (NullPointerException e) {
-           System.out.println(e.toString());
+       else {
+           return null;
        }
-        c.close();
-       return null;
+    return null;
     }
 
     TrajetClasse findOrCreateTrajet(TrajetClasse trajet) {
 
-        if (trajet.getId_trajet() != null && findTrajet(trajet.getId_trajet()) != null) {
+        if (trajet.getId_trajet() != (long) -1 && findTrajet(trajet.getId_trajet()) != null) {
             return findTrajet(trajet.getId_trajet());
         } else if (findTrajet(trajet.getGareDepart(), trajet.getGareArrive()) != null) {
             return findTrajet(trajet.getGareDepart(), trajet.getGareArrive());
         }
-        else if (trajet.getId_trajet() == null) {
+        else if (trajet.getId_trajet() == (long) -1) {
             return new TrajetClasse(createTrajet(trajet), trajet.getGareDepart(), trajet.getGareArrive());
         }
         else {
