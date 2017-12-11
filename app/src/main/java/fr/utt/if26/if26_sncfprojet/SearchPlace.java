@@ -103,14 +103,14 @@ public class SearchPlace extends AppCompatActivity {
             switch (type) {
                 case "depart":
                     trajet.setGareDepart(gare);
-                    intent = new Intent(context, addDestination.class);
+                    intent = new Intent(context, AddTrajet.class);
                     intent.putExtra("trajet", trajet);
                     setResult(Activity.RESULT_OK, intent);
                     finish();
                     break;
                 case "arrive":
                     trajet.setGareArrive(gare);
-                    intent = new Intent(context, addDestination.class);
+                    intent = new Intent(context, AddTrajet.class);
                     intent.putExtra("trajet", trajet);
                     setResult(Activity.RESULT_OK, intent);
                     finish();

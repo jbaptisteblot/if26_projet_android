@@ -22,7 +22,7 @@
         <activity
             android:name=".SearchPlace"
             android:windowSoftInputMode="adjustResize"></activity>
-        <activity android:name=".addDestination"></activity>
+        <activity android:name=".AddTrajet"></activity>
         <activity
             android:name=".ShowTrajets"
             android:label="@string/title_activity_show_trajets"

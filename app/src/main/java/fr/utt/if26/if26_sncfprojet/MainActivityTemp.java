@@ -38,7 +38,7 @@ public class MainActivityTemp extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case R.id.temp_addDestination_Button:
-                    intent = new Intent(MainActivityTemp.this, addDestination.class);
+                    intent = new Intent(MainActivityTemp.this, AddTrajet.class);
                     startActivity(intent);
                     break;
                 case R.id.temp_showTrajets_Button:

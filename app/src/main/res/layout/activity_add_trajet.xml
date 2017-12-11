@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fr.utt.if26.if26_sncfprojet.addDestination">
+    tools:context="fr.utt.if26.if26_sncfprojet.AddTrajet">
 
     <EditText
         android:id="@+id/addDestination_textInput_depart"

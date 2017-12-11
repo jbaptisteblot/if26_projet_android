@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class addDestination extends AppCompatActivity {
+public class AddTrajet extends AppCompatActivity {
     TrajetClasse trajet = new TrajetClasse(null, null);
     Context context;
     EditText editText_Depart;
@@ -18,7 +18,7 @@ public class addDestination extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_destination);
+        setContentView(R.layout.activity_add_trajet);
         context = getApplicationContext();
 
         editText_Depart = findViewById(R.id.addDestination_textInput_depart);
