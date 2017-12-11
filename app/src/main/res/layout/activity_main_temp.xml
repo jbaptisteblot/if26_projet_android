@@ -15,7 +15,7 @@
         android:layout_marginTop="12dp"
         android:text="Configuration"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline" />
+        app:layout_constraintTop_toBottomOf="@+id/temp_searchPlace_button" />
     <Button
         android:id="@+id/temp_searchPlace_button"
         style="@android:style/Widget.Material.Button"
@@ -25,7 +25,7 @@
         android:layout_marginBottom="12dp"
         android:text="SearchPlace"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/guideline" />
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,5 +52,14 @@
         android:layout_marginStart="100dp"
         android:text="addDestination"
         app:layout_constraintBottom_toTopOf="@+id/temp_searchPlace_button"
+        app:layout_constraintStart_toStartOf="parent" />
+    <Button
+        android:id="@+id/temp_showTrajets_Button"
+        android:layout_width="156dp"
+        android:layout_height="59dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="100dp"
+        android:text="show trajets"
+        app:layout_constraintBottom_toTopOf="@+id/temp_addDestination_Button"
         app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>

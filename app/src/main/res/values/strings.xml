@@ -12,4 +12,5 @@
     <string name="addDestination_textDestination_default_input">Destination</string>
     <string name="addDestination_title">Ajouter un trajet</string>
     <string name="addDestination_saveButton">Enregistrer le trajet</string>
+    <string name="title_activity_show_trajets">ShowTrajets</string>
 </resources>
