@@ -1,5 +1,6 @@
 package fr.utt.if26.if26_sncfprojet;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -49,7 +50,7 @@ public class ShowTrajets extends AppCompatActivity implements ShowTrajets_Recycl
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, AddTrajet.class);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
     }
@@ -67,4 +68,13 @@ public class ShowTrajets extends AppCompatActivity implements ShowTrajets_Recycl
                 break;
         }
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK){
+            trajets.clear();
+            trajets.addAll(db.getAllTrajet());
+            adapter.notifyDataSetChanged();
+        }
+    }//onActivityResult
 }

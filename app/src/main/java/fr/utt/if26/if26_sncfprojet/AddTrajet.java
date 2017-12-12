@@ -15,6 +15,7 @@ public class AddTrajet extends AppCompatActivity {
     Context context;
     EditText editText_Depart;
     EditText editText_Arrive;
+    Button button_save;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,8 +24,8 @@ public class AddTrajet extends AppCompatActivity {
 
         editText_Depart = findViewById(R.id.addDestination_textInput_depart);
         editText_Arrive = findViewById(R.id.addDestination_textInput_Arrive);
-        Button button_save = findViewById(R.id.addDestination_saveButton);
-
+        button_save = findViewById(R.id.addDestination_saveButton);
+        button_save.setEnabled(false);
 
         editText_Depart.setOnClickListener(onClickListener);
         editText_Arrive.setOnClickListener(onClickListener);
@@ -53,6 +54,9 @@ public class AddTrajet extends AppCompatActivity {
                     Toast.makeText(context, "Vous avez essayé d'enregistrer le trajet.", Toast.LENGTH_SHORT).show();
                     DatabaseHelper db = new DatabaseHelper(context);
                     trajet.SyncToDB(db);
+                    intent = new Intent(context, ShowTrajets.class);
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
                     break;
             }
         }
@@ -63,7 +67,9 @@ public class AddTrajet extends AppCompatActivity {
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
                 trajet = data.getParcelableExtra("trajet");
-
+                if (trajet.getGareDepart() != null && trajet.getGareArrive() != null) {
+                    button_save.setEnabled(true);
+                }
                 if (trajet.getGareDepart() != null) {
                     editText_Depart.setText(trajet.getGareDepart().getName());
                 }
