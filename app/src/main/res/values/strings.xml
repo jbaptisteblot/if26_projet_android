@@ -13,4 +13,6 @@
     <string name="addDestination_title">Ajouter un trajet</string>
     <string name="addDestination_saveButton">Enregistrer le trajet</string>
     <string name="title_activity_show_trajets">ShowTrajets</string>
+    <string name="showTrajets_cardview_EditButton">Editer</string>
+    <string name="showTrajets_cardview_DeleteButton">Supprimer</string>
 </resources>
