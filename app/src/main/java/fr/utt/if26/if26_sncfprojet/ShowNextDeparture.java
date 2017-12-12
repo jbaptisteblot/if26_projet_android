@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.BaseAdapter;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
@@ -18,6 +20,7 @@ public class ShowNextDeparture extends AppCompatActivity {
     String apikey;
     Context context;
     TrajetClasse trajet;
+    ShowNextDeparture_RecycleView_Adapter adapter;
     List<NextDepartureClass> nextDepartures = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +30,17 @@ public class ShowNextDeparture extends AppCompatActivity {
         Intent intent = getIntent();
         trajet = intent.getParcelableExtra("trajet");
         apikey = APIKeyClasse.getKey(context);
-        System.out.println(trajet);
+
+        RecyclerView rv = findViewById(R.id.showNextDeparture_RecyclerView);
+        rv.setHasFixedSize(true);
+
+        LinearLayoutManager llm = new LinearLayoutManager(context);
+        rv.setLayoutManager(llm);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rv.getContext(),
+                llm.getOrientation());
+        rv.addItemDecoration(dividerItemDecoration);
+        adapter = new ShowNextDeparture_RecycleView_Adapter(nextDepartures);
+        rv.setAdapter(adapter);
         searchInternetDeparture();
 
     }
@@ -37,6 +50,7 @@ public class ShowNextDeparture extends AppCompatActivity {
             public void notifySuccess(JSONObject response) {
                 nextDepartures.clear();
                 nextDepartures.addAll(ParseJSON.getNextDeparture(response, trajet));
+                adapter.notifyDataSetChanged();
                 System.out.println(nextDepartures);
                 //Toast.makeText(context, response.toString(), Toast.LENGTH_LONG).show();
             }
