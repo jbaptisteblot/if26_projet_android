@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,7 +19,6 @@ import java.util.List;
 
 public class ShowTrajets_RecycleView_Adapter extends RecyclerView.Adapter<ShowTrajets_RecycleView_Adapter.TrajetViewHolder> {
     private List<TrajetClasse> trajets;
-    private Context context;
     private OnItemClicked onClick;
 
     static class TrajetViewHolder extends RecyclerView.ViewHolder {
@@ -26,6 +26,8 @@ public class ShowTrajets_RecycleView_Adapter extends RecyclerView.Adapter<ShowTr
         CardView cardView;
         TextView gare_arrive;
         LinearLayout extra_button;
+        Button editButton;
+        Button deleteButton;
 
         TrajetViewHolder(View itemView) {
             super(itemView);
@@ -33,11 +35,12 @@ public class ShowTrajets_RecycleView_Adapter extends RecyclerView.Adapter<ShowTr
             gare_arrive = itemView.findViewById(R.id.showTrajets_cardview_nomGareArrive);
             cardView = itemView.findViewById(R.id.showTrajets_cardview);
             extra_button = itemView.findViewById(R.id.showTrajets_cardview_extraButton);
+            editButton = itemView.findViewById(R.id.showTrajets_cardview_EditButton);
+            deleteButton = itemView.findViewById(R.id.showTrajets_cardview_DeleteButton);
         }
     }
-    ShowTrajets_RecycleView_Adapter(List<TrajetClasse> trajets, Context context) {
+    ShowTrajets_RecycleView_Adapter(List<TrajetClasse> trajets) {
         this.trajets = trajets;
-        this.context = context;
     }
 
     @Override
@@ -61,6 +64,18 @@ public class ShowTrajets_RecycleView_Adapter extends RecyclerView.Adapter<ShowTr
                 return true;
             }
         });
+        holder.editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClick.onItemClick(holder.getAdapterPosition(), view);
+            }
+        });
+        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClick.onItemClick(holder.getAdapterPosition(), view);
+            }
+        });
     }
     @Override
     public int getItemCount() {
@@ -72,6 +87,9 @@ public class ShowTrajets_RecycleView_Adapter extends RecyclerView.Adapter<ShowTr
         super.onAttachedToRecyclerView(recyclerView);
     }
     public interface OnItemClicked {
-        void onItemClick(int position);
+        void onItemClick(int position, View view);
+    }
+    void setOnClick(OnItemClicked onClick) {
+        this.onClick = onClick;
     }
 }

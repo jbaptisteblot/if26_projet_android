@@ -10,11 +10,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ShowTrajets extends AppCompatActivity {
+public class ShowTrajets extends AppCompatActivity implements ShowTrajets_RecycleView_Adapter.OnItemClicked{
     Context context;
+    DatabaseHelper db;
+    List<TrajetClasse> trajets = new ArrayList<>();
+    ShowTrajets_RecycleView_Adapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,10 +39,11 @@ public class ShowTrajets extends AppCompatActivity {
                 llm.getOrientation());
         rv.addItemDecoration(dividerItemDecoration);
 
-        DatabaseHelper db = new DatabaseHelper(getApplicationContext());
-        List<TrajetClasse> trajets = db.getAllTrajet();
-        ShowTrajets_RecycleView_Adapter adapter = new ShowTrajets_RecycleView_Adapter(trajets, context);
+        db = new DatabaseHelper(getApplicationContext());
+        trajets = db.getAllTrajet();
+        adapter = new ShowTrajets_RecycleView_Adapter(trajets);
         rv.setAdapter(adapter);
+        adapter.setOnClick(this);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,4 +54,17 @@ public class ShowTrajets extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onItemClick(int position, View view) {
+        switch (view.getId()) {
+            case R.id.showTrajets_cardview_EditButton:
+                Toast.makeText(context, "Edit " + position, Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.showTrajets_cardview_DeleteButton:
+                db.deleteTrajet(trajets.get(position).getId_trajet());
+                trajets.remove(position);
+                adapter.notifyDataSetChanged();
+                break;
+        }
+    }
 }
