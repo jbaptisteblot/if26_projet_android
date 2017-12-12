@@ -236,7 +236,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     void deleteTrajet(long trajet_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_TRAJET, KEY_ID_TRAJET + "=?", new String[] {Objects.toString(trajet_id)});
-        deleteDepart(trajet_id);
+        deleteDepartByTrajet(trajet_id);
     }
 
     NextDepartureClass createDepart(NextDepartureClass depart) {
@@ -279,6 +279,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     void deleteDepart(long depart_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_DEPART, KEY_ID_DEPART + "=?", new String[]{Objects.toString(depart_id)});
+    }
+    void deleteDepartByTrajet(long trajet_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_DEPART, KEY_ID_TRAJET + "=?", new String[]{Objects.toString(trajet_id)});
     }
 
 

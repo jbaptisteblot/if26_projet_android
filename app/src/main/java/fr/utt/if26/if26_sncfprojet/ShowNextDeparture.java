@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
@@ -42,7 +43,9 @@ public class ShowNextDeparture extends AppCompatActivity {
         Intent intent = getIntent();
         trajet = intent.getParcelableExtra("trajet");
         apikey = APIKeyClasse.getKey(context);
-
+        // On met à jour les titres
+        ((TextView) findViewById(R.id.showNextDeparture_gareDepart)).setText(trajet.getGareDepart().getName());
+        ((TextView) findViewById(R.id.showNextDeparture_gareArrive)).setText(trajet.getGareArrive().getName());
         //Premier appel à la base de données
         db = new DatabaseHelper(context);
         try {
