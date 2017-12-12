@@ -76,6 +76,12 @@ public class ShowTrajets_RecycleView_Adapter extends RecyclerView.Adapter<ShowTr
                 onClick.onItemClick(holder.getAdapterPosition(), view);
             }
         });
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClick.onItemClick(holder.getAdapterPosition(), view);
+            }
+        });
     }
     @Override
     public int getItemCount() {

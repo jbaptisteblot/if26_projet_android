@@ -66,6 +66,11 @@ public class ShowTrajets extends AppCompatActivity implements ShowTrajets_Recycl
                 trajets.remove(position);
                 adapter.notifyDataSetChanged();
                 break;
+            case R.id.showTrajets_cardview:
+                Intent intent = new Intent(context, ShowNextDeparture.class);
+                intent.putExtra("trajet", trajets.get(position));
+                startActivity(intent);
+                break;
         }
     }
     @Override

@@ -18,15 +18,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Configuration"></activity>
+        <activity android:name=".Configuration" />
         <activity
             android:name=".SearchPlace"
-            android:windowSoftInputMode="adjustResize"></activity>
-        <activity android:name=".AddTrajet"></activity>
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".AddTrajet" />
         <activity
             android:name=".ShowTrajets"
             android:label="@string/title_activity_show_trajets"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ShowNextDeparture"></activity>
     </application>
 
 </manifest>
