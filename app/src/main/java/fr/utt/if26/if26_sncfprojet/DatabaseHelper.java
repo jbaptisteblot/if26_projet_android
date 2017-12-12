@@ -5,10 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.Nullable;
 
 import java.sql.SQLInput;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -18,7 +23,7 @@ import java.util.Objects;
 
 public class DatabaseHelper extends SQLiteOpenHelper{
     //Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     //Database Name
     private static final String DATABASE_NAME = "sncfprojet";
@@ -26,6 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     //Table Names
     private static final String TABLE_TRAJET = "trajet";
     private static final String TABLE_GARE = "gare";
+    private static final String TABLE_DEPART = "depart";
 
     // Trajet Table - nom des colonnes
     private static final String KEY_ID_TRAJET = "trajet_id";
@@ -37,11 +43,21 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     private static final String KEY_ID_GARE = "gare_id";
     private static final String KEY_NOM_GARE = "gare_nom";
 
+    // Depart Table - nom des colonnes
+    private static final String KEY_ID_DEPART ="depart_id";
+    private static final String KEY_HEURE_DEPART ="heure_depart";
+    private static final String KEY_HEURE_ARRIVE ="heure_arrive";
+    private static final String KEY_DUREE ="duree";
+
+
     private static final String CREATE_TABLE_GARE = "CREATE TABLE " + TABLE_GARE + "(" + KEY_ID_GARE + " TEXT PRIMARY KEY, " + KEY_NOM_GARE + " TEXT)";
     private static final String CREATE_TABLE_TRAJET = "CREATE TABLE " + TABLE_TRAJET + "(" + KEY_ID_TRAJET + " INTEGER PRIMARY KEY, " + KEY_GARE_DEPART + " TEXT, " + KEY_GARE_ARRIVE + " TEXT, FOREIGN KEY (" + KEY_GARE_DEPART + ") REFERENCES " + TABLE_GARE + "(" + KEY_ID_GARE + "), FOREIGN KEY (" + KEY_GARE_ARRIVE + ") REFERENCES " + TABLE_GARE + "(" + KEY_ID_GARE + "))";
+    private static final String CREATE_TABLE_DEPART = "CREATE TABLE " + TABLE_DEPART + "(" + KEY_ID_DEPART + " INTEGER PRIMARY KEY, " + KEY_ID_TRAJET + " TEXT, " + KEY_HEURE_DEPART + " TEXT, "  + KEY_HEURE_ARRIVE + " TEXT, "+ KEY_DUREE +" INTEGER, FOREIGN KEY (" + KEY_ID_TRAJET + ") REFERENCES " + TABLE_TRAJET + "(" + KEY_ID_TRAJET + "))";
 
+    //Formatter date
+    private SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd'T'kkmmss", Locale.getDefault());
 
-    public DatabaseHelper(Context context) {
+    DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -49,12 +65,14 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(CREATE_TABLE_GARE);
         sqLiteDatabase.execSQL(CREATE_TABLE_TRAJET);
+        sqLiteDatabase.execSQL(CREATE_TABLE_DEPART);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_TRAJET);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_GARE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_DEPART);
 
         onCreate(sqLiteDatabase);
     }
@@ -194,7 +212,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             return null;
         }
     }
-    public List<TrajetClasse> getAllTrajet() {
+    List<TrajetClasse> getAllTrajet() {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String selectQuery = "SELECT * FROM " + TABLE_TRAJET;
@@ -215,10 +233,55 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return trajets;
     }
 
-    public void deleteTrajet(long trajet_id) {
+    void deleteTrajet(long trajet_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_TRAJET, KEY_ID_TRAJET + "=?", new String[] {Objects.toString(trajet_id)});
+        deleteDepart(trajet_id);
     }
+
+    NextDepartureClass createDepart(NextDepartureClass depart) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID_TRAJET, depart.getTrajet().getId_trajet());
+        values.put(KEY_HEURE_DEPART, formatter.format(depart.getDeparture_date_time()));
+        values.put(KEY_HEURE_ARRIVE, formatter.format(depart.getArrival_date_time()));
+        values.put(KEY_DUREE, depart.getDuration());
+        depart.setDepart_id(db.insert(TABLE_DEPART, null, values));
+        return depart;
+    }
+    List<NextDepartureClass> getAllDepart(@Nullable Long trajet_id) throws ParseException {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT * FROM " + TABLE_DEPART;
+        List<NextDepartureClass> departs = new ArrayList<>();
+        Cursor c;
+        if(trajet_id != null) {
+            selectQuery += " WHERE " + KEY_ID_TRAJET + " =?";
+            c = db.rawQuery(selectQuery, new String[]{Objects.toString(trajet_id)});
+        } else {
+            c = db.rawQuery(selectQuery, null);
+        }
+
+        if(c!= null && c.moveToFirst()) {
+            do {
+                TrajetClasse trajet = findTrajet(c.getLong(c.getColumnIndex(KEY_ID_TRAJET)));
+                Date date_depart = formatter.parse(c.getString(c.getColumnIndex(KEY_HEURE_DEPART)));
+                Date date_arrive = formatter.parse(c.getString(c.getColumnIndex(KEY_HEURE_ARRIVE)));
+                departs.add(new NextDepartureClass(c.getLong(c.getColumnIndex(KEY_ID_DEPART)), trajet, date_depart, date_arrive, c.getInt(c.getColumnIndex(KEY_DUREE))));
+            } while (c.moveToNext());
+        }
+        assert c != null;
+        c.close();
+        return departs;
+
+    }
+    void deleteDepart(long depart_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_DEPART, KEY_ID_DEPART + "=?", new String[]{Objects.toString(depart_id)});
+    }
+
+
 
 
 }
