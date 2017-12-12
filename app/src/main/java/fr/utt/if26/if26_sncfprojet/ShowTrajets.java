@@ -35,7 +35,7 @@ public class ShowTrajets extends AppCompatActivity {
 
         DatabaseHelper db = new DatabaseHelper(getApplicationContext());
         List<TrajetClasse> trajets = db.getAllTrajet();
-        ShowTrajets_RecycleView_Adapter adapter = new ShowTrajets_RecycleView_Adapter(trajets);
+        ShowTrajets_RecycleView_Adapter adapter = new ShowTrajets_RecycleView_Adapter(trajets, context);
         rv.setAdapter(adapter);
 
         addButton.setOnClickListener(new View.OnClickListener() {
