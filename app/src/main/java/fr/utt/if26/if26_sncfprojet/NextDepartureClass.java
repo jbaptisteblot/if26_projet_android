@@ -38,44 +38,48 @@ public class NextDepartureClass {
                 ", duration=" + duration +
                 '}';
     }
-
-    public long getDepart_id() {
+    String durationString() {
+        int heures = this.duration/3600;
+        int minutes = (this.duration - 3600*heures)/60;
+        return (String.valueOf(heures) + "h" + String.valueOf(minutes));
+    }
+    long getDepart_id() {
         return depart_id;
     }
 
-    public void setDepart_id(long depart_id) {
+     void setDepart_id(long depart_id) {
         this.depart_id = depart_id;
     }
 
-    public TrajetClasse getTrajet() {
+     TrajetClasse getTrajet() {
         return trajet;
     }
 
-    public void setTrajet(TrajetClasse trajet) {
+     void setTrajet(TrajetClasse trajet) {
         this.trajet = trajet;
     }
 
-    public Date getArrival_date_time() {
+     Date getArrival_date_time() {
         return arrival_date_time;
     }
 
-    public void setArrival_date_time(Date arrival_date_time) {
+     void setArrival_date_time(Date arrival_date_time) {
         this.arrival_date_time = arrival_date_time;
     }
 
-    public Date getDeparture_date_time() {
+     Date getDeparture_date_time() {
         return departure_date_time;
     }
 
-    public void setDeparture_date_time(Date departure_date_time) {
+     void setDeparture_date_time(Date departure_date_time) {
         this.departure_date_time = departure_date_time;
     }
 
-    public int getDuration() {
+     int getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+     void setDuration(int duration) {
         this.duration = duration;
     }
 }

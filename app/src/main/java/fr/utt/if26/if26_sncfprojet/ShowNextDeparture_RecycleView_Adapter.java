@@ -23,11 +23,13 @@ public class ShowNextDeparture_RecycleView_Adapter extends RecyclerView.Adapter<
         TextView heure_depart;
         CardView cardView;
         TextView heure_arrive;
+        TextView duration;
 
         NextDepartViewHolder(View itemView) {
             super(itemView);
             heure_depart = itemView.findViewById(R.id.showNextDeparture_cardview_heuredepart);
             heure_arrive = itemView.findViewById(R.id.showNextDeparture_cardview_heurearrive);
+            duration = itemView.findViewById(R.id.showNextDeparture_cardview_duration);
             cardView = itemView.findViewById(R.id.showNextDeparture_cardview);
         }
     }
@@ -45,6 +47,7 @@ public class ShowNextDeparture_RecycleView_Adapter extends RecyclerView.Adapter<
         SimpleDateFormat formatter = new SimpleDateFormat("kk:mm", Locale.getDefault());
         holder.heure_depart.setText(formatter.format(nextDepartures.get(position).getDeparture_date_time()));
         holder.heure_arrive.setText(formatter.format(nextDepartures.get(position).getArrival_date_time()));
+        holder.duration.setText(nextDepartures.get(position).durationString());
 
     }
 
