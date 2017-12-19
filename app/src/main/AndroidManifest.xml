@@ -11,23 +11,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivityTemp">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".Configuration" />
-        <activity
-            android:name=".SearchPlace"
-            android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".AddTrajet" />
-        <activity
-            android:name=".ShowTrajets"
-            android:label="@string/title_activity_show_trajets"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ShowNextDeparture" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main">
@@ -37,6 +20,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivityTemp">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SearchPlace"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".AddTrajet" />
+        <activity
+            android:name=".ShowTrajets"
+            android:label="@string/title_activity_show_trajets"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ShowNextDeparture" />
+
     </application>
 
 </manifest>

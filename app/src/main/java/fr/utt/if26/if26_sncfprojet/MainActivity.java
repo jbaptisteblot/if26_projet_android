@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     ViewPager vp;
+    MenuItem prevMenuItem;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView navigation = findViewById(R.id.navigation);
+        final BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         vp = findViewById(R.id.viewPager);
         vp.setAdapter(new CustomPageAdapter(getSupportFragmentManager()) {
@@ -60,6 +61,31 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public int getCount() {
                 return 3;
+            }
+        });
+        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (prevMenuItem != null) {
+                    prevMenuItem.setChecked(false);
+                }
+                else
+                {
+                    navigation.getMenu().getItem(0).setChecked(false);
+                }
+
+                navigation.getMenu().getItem(position).setChecked(true);
+                prevMenuItem = navigation.getMenu().getItem(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
     }
