@@ -41,7 +41,11 @@ public class NextDepartureClass {
     String durationString() {
         int heures = this.duration/3600;
         int minutes = (this.duration - 3600*heures)/60;
-        return (String.valueOf(heures) + "h" + String.valueOf(minutes));
+        String minutesSTR = String.valueOf(minutes);
+        if (minutes < 10) {
+            minutesSTR = "0" + minutesSTR;
+        }
+        return (String.valueOf(heures) + "h" + minutesSTR);
     }
     long getDepart_id() {
         return depart_id;
