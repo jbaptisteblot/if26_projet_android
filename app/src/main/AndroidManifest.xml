@@ -27,7 +27,16 @@
             android:name=".ShowTrajets"
             android:label="@string/title_activity_show_trajets"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ShowNextDeparture"></activity>
+        <activity android:name=".ShowNextDeparture" />
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

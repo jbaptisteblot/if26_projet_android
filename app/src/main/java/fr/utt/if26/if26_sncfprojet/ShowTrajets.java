@@ -5,33 +5,35 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShowTrajets extends AppCompatActivity implements ShowTrajets_RecycleView_Adapter.OnItemClicked{
+public class ShowTrajets extends Fragment implements ShowTrajets_RecycleView_Adapter.OnItemClicked{
     Context context;
     DatabaseHelper db;
     List<TrajetClasse> trajets = new ArrayList<>();
     ShowTrajets_RecycleView_Adapter adapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_trajets);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        context = getApplicationContext();
-        FloatingActionButton addButton = findViewById(R.id.ShowTrajets_AddButton);
+        View view = inflater.inflate(R.layout.activity_show_trajets, container, false);
+        context = view.getContext();
+        FloatingActionButton addButton = view.findViewById(R.id.ShowTrajets_AddButton);
 
-        RecyclerView rv = findViewById(R.id.showTrajets_recyclerview);
+        RecyclerView rv = view.findViewById(R.id.showTrajets_recyclerview);
         rv.setHasFixedSize(true);
 
         LinearLayoutManager llm = new LinearLayoutManager(context);
@@ -40,7 +42,7 @@ public class ShowTrajets extends AppCompatActivity implements ShowTrajets_Recycl
                 llm.getOrientation());
         rv.addItemDecoration(dividerItemDecoration);
 
-        db = new DatabaseHelper(getApplicationContext());
+        db = new DatabaseHelper(context);
         trajets = db.getAllTrajet();
         adapter = new ShowTrajets_RecycleView_Adapter(trajets);
         rv.setAdapter(adapter);
@@ -53,6 +55,8 @@ public class ShowTrajets extends AppCompatActivity implements ShowTrajets_Recycl
                 startActivityForResult(intent, 1);
             }
         });
+
+        return view;
     }
 
     @Override
@@ -74,7 +78,7 @@ public class ShowTrajets extends AppCompatActivity implements ShowTrajets_Recycl
         }
     }
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == 1 && resultCode == Activity.RESULT_OK){
             trajets.clear();
