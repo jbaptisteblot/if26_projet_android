@@ -16,7 +16,7 @@
     <string name="showTrajets_cardview_EditButton">Editer</string>
     <string name="showTrajets_cardview_DeleteButton">Supprimer</string>
     <string name="showNextDeparture_prochainsdepart">Prochains départs</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Mes trajets préférés</string>
     <string name="title_home">Home</string>
     <string name="title_gares">Gares</string>
     <string name="title_configuration">Configuration</string>
