@@ -75,13 +75,13 @@ public class MainActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 switch (position) {
                     case 0:
-                        toolbar.setTitle("Mes trajets préférés");
+                        toolbar.setTitle(getResources().getString(R.string.title_activity_show_trajets));
                         break;
                     case 1:
-                        toolbar.setTitle("Mes gares préférées");
+                        toolbar.setTitle(getResources().getString(R.string.title_gares));
                         break;
                     case 2:
-                        toolbar.setTitle("Configuration");
+                        toolbar.setTitle(getResources().getString(R.string.title_configuration));
                         break;
                 }
                 if (prevMenuItem != null) {

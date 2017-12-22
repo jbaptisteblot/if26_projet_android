@@ -25,9 +25,12 @@
         </activity>
         <activity
             android:name=".SearchPlace"
+            android:label="@string/title_activity_search_place"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".AddTrajet" />
-        <activity android:name=".ShowNextDeparture" />
+        <activity android:name=".AddTrajet"
+            android:label="@string/title_activity_addTrajet"/>
+        <activity android:name=".ShowNextDeparture"
+            android:label="@string/title_activity_departure"/>
 
     </application>
 

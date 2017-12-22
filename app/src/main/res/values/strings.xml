@@ -6,7 +6,9 @@
     <string name="save">Sauvegarder</string>
     <string name="apikey">apikey</string>
     <string name="apikey_save_successfull">Votre clé a été sauvegardée.</string>
-    <string name="title_activity_search_place">SearchPlace</string>
+    <string name="title_activity_search_place">Chercher une gare</string>
+    <string name="title_activity_departure">Prochains départs</string>
+    <string name="title_activity_addTrajet">Ajouter un trajet</string>
     <string name="searchplace_text_default_input">Gare</string>
     <string name="addDestination_textDepart_default_input">Départ</string>
     <string name="addDestination_textDestination_default_input">Destination</string>
@@ -17,7 +19,6 @@
     <string name="showTrajets_cardview_DeleteButton">Supprimer</string>
     <string name="showNextDeparture_prochainsdepart">Prochains départs</string>
     <string name="title_activity_main">Mes trajets préférés</string>
-    <string name="title_home">Home</string>
-    <string name="title_gares">Gares</string>
+    <string name="title_gares">Mes gares</string>
     <string name="title_configuration">Configuration</string>
 </resources>
