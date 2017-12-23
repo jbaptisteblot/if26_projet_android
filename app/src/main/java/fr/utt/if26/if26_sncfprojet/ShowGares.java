@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 public class ShowGares extends Fragment {
     Context context;
+    DatabaseHelper db;
 
     public ShowGares() {
         // Required empty public constructor
@@ -31,6 +32,7 @@ public class ShowGares extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_show_gares, container, false);
         context = view.getContext();
+        db = new DatabaseHelper(context);
 
         FloatingActionButton addButton = view.findViewById(R.id.ShowGares_AddButton);
 
@@ -43,6 +45,8 @@ public class ShowGares extends Fragment {
                 startActivityForResult(intent, 1);
             }
         });
+
+
         return view;
     }
     @Override
@@ -51,7 +55,7 @@ public class ShowGares extends Fragment {
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
                 GareClasse gare = data.getParcelableExtra("gare");
-                System.out.println(gare);
+                db.createGarePref(gare);
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 //Write your code if there's no result
