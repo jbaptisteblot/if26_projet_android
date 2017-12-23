@@ -305,11 +305,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         findOrCreateGare(gare);
         return db.insert(TABLE_GAREPREF, null, values);
     }
-    /**
+
     void findOrCreateGarePref(GareClasse gare) {
-        GareClasse foundGare = findGarePref(gare.getId());
-        if(foundGare == null) createGare(gare);
-    }**/
+        GareClasse foundGare = getGarePref(gare.getId());
+        if(foundGare == null) createGarePref(gare);
+    }
 
     List<GareClasse> getAllGaresPref() {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -333,8 +333,32 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return gares;
     }
 
+    GareClasse getGarePref(String id_garerequest) {
+        SQLiteDatabase db = getReadableDatabase();
 
+        String selectQuery = "SELECT * FROM " + TABLE_GAREPREF + " gf, " + TABLE_GARE + " g WHERE gf." + KEY_ID_GARE + "= ? AND gf." + KEY_ID_GARE + "= g." + KEY_ID_GARE;
+        Cursor c = db.rawQuery(selectQuery, new String[]{id_garerequest});
+        if (c != null && c.moveToFirst()) {
+            try {
+                String id_gare = c.getString(c.getColumnIndex(KEY_ID_GARE));
+                String nom_gare = c.getString(c.getColumnIndex(KEY_NOM_GARE));
 
+                return new GareClasse(nom_gare, id_gare);
+            } catch (NullPointerException e) {
+                System.out.println(e.toString());
+            }
+            c.close();
+        }
+        else {
+            return null;
+        }
+        return null;
 
+    }
+
+    public void deleteGarePref(String gare_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_GAREPREF, KEY_ID_GARE + "=?", new String[] {gare_id});
+    }
 
 }
