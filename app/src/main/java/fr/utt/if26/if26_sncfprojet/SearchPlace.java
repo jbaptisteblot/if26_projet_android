@@ -55,6 +55,8 @@ public class SearchPlace extends AppCompatActivity {
             case "arrive":
                 searchPlaceInput.setHint(R.string.addDestination_textDestination_default_input);
                 break;
+            case "pref":
+                searchPlaceInput.setHint(R.string.title_gares);
         }
 
         final GareArrayAdapter gareArrayAdapter = new GareArrayAdapter(context, gares);
@@ -112,6 +114,12 @@ public class SearchPlace extends AppCompatActivity {
                     trajet.setGareArrive(gare);
                     intent = new Intent(context, AddTrajet.class);
                     intent.putExtra("trajet", trajet);
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
+                    break;
+                case "pref":
+                    intent = new Intent(context, ShowGares.class);
+                    intent.putExtra("gare", gare);
                     setResult(Activity.RESULT_OK, intent);
                     finish();
                     break;

@@ -21,4 +21,7 @@
     <string name="title_activity_main">Mes trajets préférés</string>
     <string name="title_gares">Mes gares</string>
     <string name="title_configuration">Configuration</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

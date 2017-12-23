@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
                 switch (position) {
                     case 0:
                         return new ShowTrajets();
+                    case 1:
+                        return new ShowGares();
                     case 2:
                         return new Configuration();
                     default:
@@ -75,13 +77,13 @@ public class MainActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 switch (position) {
                     case 0:
-                        toolbar.setTitle(getResources().getString(R.string.title_activity_show_trajets));
+                        toolbar.setTitle(R.string.title_activity_show_trajets);
                         break;
                     case 1:
-                        toolbar.setTitle(getResources().getString(R.string.title_gares));
+                        toolbar.setTitle(R.string.title_gares);
                         break;
                     case 2:
-                        toolbar.setTitle(getResources().getString(R.string.title_configuration));
+                        toolbar.setTitle(R.string.title_configuration);
                         break;
                 }
                 if (prevMenuItem != null) {
