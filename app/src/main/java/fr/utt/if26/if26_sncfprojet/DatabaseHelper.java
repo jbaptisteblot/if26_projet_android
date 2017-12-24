@@ -258,7 +258,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         values.put(KEY_HEURE_DEPART, formatter.format(depart.getDeparture_date_time()));
         values.put(KEY_HEURE_ARRIVE, formatter.format(depart.getArrival_date_time()));
         values.put(KEY_DUREE, depart.getDuration());
-        values.put(KEY_CORRESPONDANCE, 0);
+        values.put(KEY_CORRESPONDANCE, depart.getCorrespondance());
         // TODO: Mettre cette valeur de manière dynamique
         depart.setDepart_id(db.insert(TABLE_DEPART, null, values));
         return depart;
@@ -281,7 +281,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 TrajetClasse trajet = findTrajet(c.getLong(c.getColumnIndex(KEY_ID_TRAJET)));
                 Date date_depart = formatter.parse(c.getString(c.getColumnIndex(KEY_HEURE_DEPART)));
                 Date date_arrive = formatter.parse(c.getString(c.getColumnIndex(KEY_HEURE_ARRIVE)));
-                departs.add(new NextDepartureClass(c.getLong(c.getColumnIndex(KEY_ID_DEPART)), trajet, date_depart, date_arrive, c.getInt(c.getColumnIndex(KEY_DUREE))));
+                departs.add(new NextDepartureClass(c.getLong(c.getColumnIndex(KEY_ID_DEPART)), trajet, date_depart, date_arrive, c.getInt(c.getColumnIndex(KEY_DUREE)),  c.getInt(c.getColumnIndex(KEY_CORRESPONDANCE))));
             } while (c.moveToNext());
         }
         assert c != null;

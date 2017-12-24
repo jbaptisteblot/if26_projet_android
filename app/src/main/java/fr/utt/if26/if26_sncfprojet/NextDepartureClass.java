@@ -13,19 +13,24 @@ public class NextDepartureClass {
     private Date arrival_date_time;
     private Date departure_date_time;
     private int duration;
+    private int correspondance;
 
-    NextDepartureClass(TrajetClasse trajet, Date departure_date_time, Date arrival_date_time, int duration) {
+    NextDepartureClass(TrajetClasse trajet, Date departure_date_time, Date arrival_date_time, int duration, int correspondance) {
         this.trajet = trajet;
         this.arrival_date_time = arrival_date_time;
         this.departure_date_time = departure_date_time;
         this.duration = duration;
+        this.correspondance = correspondance;
     }
-    NextDepartureClass(long depart_id,TrajetClasse trajet, Date departure_date_time, Date arrival_date_time, int duration) {
+    NextDepartureClass(long depart_id,TrajetClasse trajet, Date departure_date_time, Date arrival_date_time, int duration, int correspondance) {
         this.depart_id = depart_id;
         this.trajet = trajet;
         this.arrival_date_time = arrival_date_time;
         this.departure_date_time = departure_date_time;
         this.duration = duration;
+        this.correspondance = correspondance;
+
+        System.out.println(correspondance);
     }
 
     @Override
@@ -36,6 +41,7 @@ public class NextDepartureClass {
                 ", arrival_date_time=" + arrival_date_time +
                 ", departure_date_time=" + departure_date_time +
                 ", duration=" + duration +
+                ", correspondance=" + correspondance +
                 '}';
     }
     String durationString() {
@@ -85,5 +91,13 @@ public class NextDepartureClass {
 
      void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    public int getCorrespondance() {
+        return correspondance;
+    }
+
+    public void setCorrespondance(int correspondance) {
+        this.correspondance = correspondance;
     }
 }

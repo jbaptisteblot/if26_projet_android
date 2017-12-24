@@ -44,7 +44,8 @@ class ParseJSON {
                 Date dateDepart = parser.parse(oneObject.getString("departure_date_time"));
                 Date dateArrive = parser.parse(oneObject.getString("arrival_date_time"));
                 int duration = oneObject.getInt("duration");
-                listNexDepartures.add(new NextDepartureClass(trajet, dateDepart, dateArrive, duration));
+                int correspondance = oneObject.getInt("nb_transfers");
+                listNexDepartures.add(new NextDepartureClass(trajet, dateDepart, dateArrive, duration, correspondance));
             }
         } catch (JSONException e) {
             System.out.println(e.toString());

@@ -24,12 +24,14 @@ public class ShowNextDeparture_RecycleView_Adapter extends RecyclerView.Adapter<
         CardView cardView;
         TextView heure_arrive;
         TextView duration;
+        TextView correspondance;
 
         NextDepartViewHolder(View itemView) {
             super(itemView);
             heure_depart = itemView.findViewById(R.id.showNextDeparture_cardview_heuredepart);
             heure_arrive = itemView.findViewById(R.id.showNextDeparture_cardview_heurearrive);
             duration = itemView.findViewById(R.id.showNextDeparture_cardview_duration);
+            correspondance = itemView.findViewById(R.id.showNextDeparture_cardview_correspondance);
             cardView = itemView.findViewById(R.id.showNextDeparture_cardview);
         }
     }
@@ -48,6 +50,10 @@ public class ShowNextDeparture_RecycleView_Adapter extends RecyclerView.Adapter<
         holder.heure_depart.setText(formatter.format(nextDepartures.get(position).getDeparture_date_time()));
         holder.heure_arrive.setText(formatter.format(nextDepartures.get(position).getArrival_date_time()));
         holder.duration.setText(nextDepartures.get(position).durationString());
+        if (nextDepartures.get(position).getCorrespondance() > 0) {
+            String correspondance = String.valueOf(nextDepartures.get(position).getCorrespondance()) + " correspondance";
+            holder.correspondance.setText(correspondance);
+        }
 
     }
 
