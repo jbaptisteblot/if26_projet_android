@@ -50,10 +50,9 @@ public class ShowNextDeparture_RecycleView_Adapter extends RecyclerView.Adapter<
         holder.heure_depart.setText(formatter.format(nextDepartures.get(position).getDeparture_date_time()));
         holder.heure_arrive.setText(formatter.format(nextDepartures.get(position).getArrival_date_time()));
         holder.duration.setText(nextDepartures.get(position).durationString());
-        if (nextDepartures.get(position).getCorrespondance() > 0) {
-            String correspondance = String.valueOf(nextDepartures.get(position).getCorrespondance()) + " correspondance";
-            holder.correspondance.setText(correspondance);
-        }
+        String correspondance = String.valueOf(nextDepartures.get(position).getCorrespondance() + 1) + " ";
+        holder.correspondance.setText(correspondance);
+
 
     }
 
