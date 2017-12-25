@@ -92,6 +92,11 @@ public class ShowGares extends Fragment implements ShowGares_RecycleView_Adapter
     @Override
     public void onItemClick(int position, View view) {
         switch (view.getId()) {
+            case R.id.showGares_cardview:
+                Intent intent = new Intent(context, ShowDepartsGare.class);
+                intent.putExtra("garepref", gares.get(position));
+                startActivity(intent);
+                break;
             case R.id.showGares_cardview_DeleteButton:
                 db.deleteGarePref(gares.get(position).getId());
                 gares.remove(position);
