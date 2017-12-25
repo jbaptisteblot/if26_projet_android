@@ -58,15 +58,13 @@ class ParseJSON {
     static List<DepartGareClass> getDepartureGare(JSONObject json, GareClasse gare) {
         List<DepartGareClass> listNexDepartures = new ArrayList<>();
         try {
-            JSONArray jsonArray = json.getJSONArray("journeys");
+            JSONArray jsonArray = json.getJSONArray("departures");
             for(int i =0; i < jsonArray.length(); i++) {
                 JSONObject oneObject = jsonArray.getJSONObject(i);
-
-                Date dateDepart = parser.parse(oneObject.getString("departure_date_time"));
-                Date dateArrive = parser.parse(oneObject.getString("arrival_date_time"));
-                int duration = oneObject.getInt("duration");
-                int correspondance = oneObject.getInt("nb_transfers");
-                //listNexDepartures.add(new NextDepartureClass(gare, dateDepart, dateArrive, duration, correspondance));
+                GareClasse gareArrive = new GareClasse(oneObject.getJSONObject("route").getJSONObject("direction").getString("id"), oneObject.getJSONObject("route").getJSONObject("direction").getString("id"));
+                Date dateDepart = parser.parse(oneObject.getJSONObject("stop_date_time").getString("departure_date_time"));
+                Date dateArrive = parser.parse(oneObject.getJSONObject("stop_date_time").getString("arrival_date_time"));
+                listNexDepartures.add(new DepartGareClass(gare, gareArrive, dateDepart, dateArrive));
             }
         } catch (JSONException e) {
             System.out.println(e.toString());

@@ -259,7 +259,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         values.put(KEY_HEURE_ARRIVE, formatter.format(depart.getArrival_date_time()));
         values.put(KEY_DUREE, depart.getDuration());
         values.put(KEY_CORRESPONDANCE, depart.getCorrespondance());
-        // TODO: Mettre cette valeur de manière dynamique
         depart.setDepart_id(db.insert(TABLE_DEPART, null, values));
         return depart;
     }
@@ -360,5 +359,54 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_GAREPREF, KEY_ID_GARE + "=?", new String[] {gare_id});
     }
+
+    DepartGareClass createDepartGare(DepartGareClass depart) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_GARE_DEPART, depart.getGare_depart().getId());
+        values.put(KEY_GARE_ARRIVE, depart.getGare_arrive().getId());
+        values.put(KEY_HEURE_DEPART, formatter.format(depart.getHeure_depart()));
+        values.put(KEY_HEURE_ARRIVE, formatter.format(depart.getGare_arrive()));
+
+        depart.setId_depart(db.insert(TABLE_DEPART, null, values));
+        return depart;
+    }
+    List<DepartGareClass> getAllDepartGare(@Nullable String gare_id) throws ParseException {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT * FROM " + TABLE_DEPARTGARE;
+        List<DepartGareClass> departs = new ArrayList<>();
+        Cursor c;
+        if(gare_id != null) {
+            selectQuery += " WHERE " + KEY_ID_TRAJET + " =?";
+            c = db.rawQuery(selectQuery, new String[]{gare_id});
+        } else {
+            c = db.rawQuery(selectQuery, null);
+        }
+
+        if(c!= null && c.moveToFirst()) {
+            do {
+                GareClasse gare_depart = findGare(c.getString(c.getColumnIndex(KEY_GARE_DEPART)));
+                GareClasse gare_arrive = findGare(c.getString(c.getColumnIndex(KEY_GARE_ARRIVE)));
+                Date date_depart = formatter.parse(c.getString(c.getColumnIndex(KEY_HEURE_DEPART)));
+                Date date_arrive = formatter.parse(c.getString(c.getColumnIndex(KEY_HEURE_ARRIVE)));
+                departs.add(new DepartGareClass(c.getLong(c.getColumnIndex(KEY_ID_DEPARTGARE)), gare_depart, gare_arrive, date_depart, date_arrive));
+            } while (c.moveToNext());
+        }
+        assert c != null;
+        c.close();
+        return departs;
+
+    }
+    void deleteDepartGare(long depart_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_DEPARTGARE, KEY_ID_DEPARTGARE + "=?", new String[]{Objects.toString(depart_id)});
+    }
+    void deleteDepartGareByGare(String gare_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_DEPARTGARE, KEY_GARE_DEPART + "=?", new String[]{gare_id});
+    }
+
 
 }

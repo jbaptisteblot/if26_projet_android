@@ -71,7 +71,7 @@ public class ShowNextDeparture extends AppCompatActivity {
                         }
                     }
                 });
-                lastDate = dernierTrajet.getDeparture_date_time();
+                lastDate = new Date(dernierTrajet.getDeparture_date_time().getTime() + 60000);
             }
             if (nextDepartures.size() < 5) {
 
@@ -122,6 +122,7 @@ public class ShowNextDeparture extends AppCompatActivity {
                 + trajet.getGareArrive().getId() +
                 "&from=" + trajet.getGareDepart().getId()
                 + "&min_nb_journeys=5&datetime=" + formatter.format(lastDate);
+
         IResult callback = volleyCallback();
         VolleyService volleyService = new VolleyService(callback, context);
         volleyService.getData(url, apikey);

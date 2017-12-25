@@ -62,7 +62,7 @@ public class ShowDepartsGare extends AppCompatActivity {
         Toast.makeText(context, "Recherche...", Toast.LENGTH_SHORT).show();
         String url = "https://api.sncf.com/v1/coverage/sncf/stop_areas/"
                 + garePref.getId()
-                + "?data_freshness=realtime";
+                + "/departures?data_freshness=realtime";
         IResult callback = volleyCallback();
         VolleyService volleyService = new VolleyService(callback, context);
         volleyService.getData(url, apikey);
