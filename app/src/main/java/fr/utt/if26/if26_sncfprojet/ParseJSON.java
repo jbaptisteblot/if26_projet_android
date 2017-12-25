@@ -17,6 +17,8 @@ import java.util.Locale;
  */
 
 class ParseJSON {
+    private static SimpleDateFormat parser = new SimpleDateFormat("yyyyMMdd'T'kkmmss", Locale.getDefault());
+
     static ArrayList<GareClasse> getGares(JSONObject json) {
         ArrayList<GareClasse> gareClasseArrayList = new ArrayList<>();
         try {
@@ -40,12 +42,31 @@ class ParseJSON {
             JSONArray jsonArray = json.getJSONArray("journeys");
             for(int i =0; i < jsonArray.length(); i++) {
                 JSONObject oneObject = jsonArray.getJSONObject(i);
-                SimpleDateFormat parser = new SimpleDateFormat("yyyyMMdd'T'kkmmss", Locale.getDefault());
                 Date dateDepart = parser.parse(oneObject.getString("departure_date_time"));
                 Date dateArrive = parser.parse(oneObject.getString("arrival_date_time"));
                 int duration = oneObject.getInt("duration");
                 int correspondance = oneObject.getInt("nb_transfers");
                 listNexDepartures.add(new NextDepartureClass(trajet, dateDepart, dateArrive, duration, correspondance));
+            }
+        } catch (JSONException e) {
+            System.out.println(e.toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return listNexDepartures;
+    }
+    static List<DepartGareClass> getDepartureGare(JSONObject json, GareClasse gare) {
+        List<DepartGareClass> listNexDepartures = new ArrayList<>();
+        try {
+            JSONArray jsonArray = json.getJSONArray("journeys");
+            for(int i =0; i < jsonArray.length(); i++) {
+                JSONObject oneObject = jsonArray.getJSONObject(i);
+
+                Date dateDepart = parser.parse(oneObject.getString("departure_date_time"));
+                Date dateArrive = parser.parse(oneObject.getString("arrival_date_time"));
+                int duration = oneObject.getInt("duration");
+                int correspondance = oneObject.getInt("nb_transfers");
+                //listNexDepartures.add(new NextDepartureClass(gare, dateDepart, dateArrive, duration, correspondance));
             }
         } catch (JSONException e) {
             System.out.println(e.toString());
