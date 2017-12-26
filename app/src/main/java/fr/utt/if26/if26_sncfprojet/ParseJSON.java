@@ -61,7 +61,7 @@ class ParseJSON {
             JSONArray jsonArray = json.getJSONArray("departures");
             for(int i =0; i < jsonArray.length(); i++) {
                 JSONObject oneObject = jsonArray.getJSONObject(i);
-                GareClasse gareArrive = new GareClasse(oneObject.getJSONObject("route").getJSONObject("direction").getString("id"), oneObject.getJSONObject("route").getJSONObject("direction").getString("id"));
+                GareClasse gareArrive = new GareClasse(oneObject.getJSONObject("route").getJSONObject("direction").getString("name"), oneObject.getJSONObject("route").getJSONObject("direction").getString("id"));
                 Date dateDepart = parser.parse(oneObject.getJSONObject("stop_date_time").getString("departure_date_time"));
                 Date dateArrive = parser.parse(oneObject.getJSONObject("stop_date_time").getString("arrival_date_time"));
                 listNexDepartures.add(new DepartGareClass(gare, gareArrive, dateDepart, dateArrive));

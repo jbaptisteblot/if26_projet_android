@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/IF26_SNCFProjet.iml" filepath="$PROJECT_DIR$/IF26_SNCFProjet.iml" />
+      <module fileurl="file://E:\Programmation\Android\if26\IF26_SNCFProjet.iml" filepath="E:\Programmation\Android\if26\IF26_SNCFProjet.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/if26.iml" filepath="$PROJECT_DIR$/if26.iml" />
     </modules>
   </component>
 </project>

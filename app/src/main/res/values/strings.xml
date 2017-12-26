@@ -7,7 +7,7 @@
     <string name="apikey">apikey</string>
     <string name="apikey_save_successfull">Votre clé a été sauvegardée.</string>
     <string name="title_activity_search_place">Chercher une gare</string>
-    <string name="title_activity_departure">Prochains départs</string>
+    <string name="title_activity_departure">Prochains départs (Beta)</string>
     <string name="title_activity_addTrajet">Ajouter un trajet</string>
     <string name="searchplace_text_default_input">Gare</string>
     <string name="addDestination_textDepart_default_input">Départ</string>
