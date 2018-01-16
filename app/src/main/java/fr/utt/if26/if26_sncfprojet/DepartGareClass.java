@@ -22,6 +22,17 @@ public class DepartGareClass {
         this.heure_arrive = heure_arrive;
     }
 
+    @Override
+    public String toString() {
+        return "DepartGareClass{" +
+                "id_depart=" + id_depart +
+                ", gare_depart=" + gare_depart +
+                ", gare_arrive=" + gare_arrive +
+                ", heure_depart=" + heure_depart +
+                ", heure_arrive=" + heure_arrive +
+                '}';
+    }
+
     public long getId_depart() {
         return id_depart;
     }

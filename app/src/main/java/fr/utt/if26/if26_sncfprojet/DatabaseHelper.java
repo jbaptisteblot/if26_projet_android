@@ -364,12 +364,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
+        this.findOrCreateGare(depart.getGare_arrive());
         values.put(KEY_GARE_DEPART, depart.getGare_depart().getId());
         values.put(KEY_GARE_ARRIVE, depart.getGare_arrive().getId());
         values.put(KEY_HEURE_DEPART, formatter.format(depart.getHeure_depart()));
-        values.put(KEY_HEURE_ARRIVE, formatter.format(depart.getGare_arrive()));
+        values.put(KEY_HEURE_ARRIVE, formatter.format(depart.getHeure_arrive()));
 
-        depart.setId_depart(db.insert(TABLE_DEPART, null, values));
+        depart.setId_depart(db.insert(TABLE_DEPARTGARE, null, values));
         return depart;
     }
     List<DepartGareClass> getAllDepartGare(@Nullable String gare_id) throws ParseException {
@@ -379,7 +380,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         List<DepartGareClass> departs = new ArrayList<>();
         Cursor c;
         if(gare_id != null) {
-            selectQuery += " WHERE " + KEY_ID_TRAJET + " =?";
+            selectQuery += " WHERE " + KEY_GARE_DEPART + " =?";
             c = db.rawQuery(selectQuery, new String[]{gare_id});
         } else {
             c = db.rawQuery(selectQuery, null);
